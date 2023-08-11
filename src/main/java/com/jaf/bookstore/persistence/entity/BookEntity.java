@@ -34,7 +34,7 @@ public class BookEntity {
 
     public LocalDate date;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 65535, columnDefinition="Text")
     public String synopsis;
 
     @Column(nullable = false, length = 15)
@@ -46,7 +46,7 @@ public class BookEntity {
     @Column(nullable = false)
     public Integer pages;
 
-    @Column(nullable = false, length = 17)
+    @Column( length = 17)
     public String isbn;
 
     public String cover;

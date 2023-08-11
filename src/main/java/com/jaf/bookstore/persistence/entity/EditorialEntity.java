@@ -26,7 +26,7 @@ public class EditorialEntity {
     @Column(name = "id_editorial", nullable = false)
     public Integer idEditorial;
 
-    @Column( nullable = false ,length = 30)
+    @Column( nullable = false ,length = 100)
     public String name;
 
     @OneToMany(mappedBy = "editorial")
