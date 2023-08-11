@@ -51,6 +51,7 @@ public class BookEntity {
 
     public String cover;
 
+
     @ManyToMany
     @JoinTable(name="books_author", joinColumns = @JoinColumn(name = "id_book"), inverseJoinColumns = @JoinColumn(name="id_author"))
     public List<AuthorEntity> authors;

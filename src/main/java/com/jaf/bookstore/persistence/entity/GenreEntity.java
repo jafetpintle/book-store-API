@@ -1,5 +1,6 @@
 package com.jaf.bookstore.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ public class GenreEntity {
     @Column(nullable = false, length = 45)
     public String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "genre")
     public List<BookEntity> books;
 }
