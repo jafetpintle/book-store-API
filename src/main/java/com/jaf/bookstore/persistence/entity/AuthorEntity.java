@@ -28,9 +28,6 @@ public class AuthorEntity {
     @Column(nullable = false, length = 50)
     public String name;
 
-    @Column(length = 150)
-    public String biography;
-
     @ManyToMany(mappedBy = "authors")
     List<BookEntity> books;
 

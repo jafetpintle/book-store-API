@@ -9,8 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +29,7 @@ public class BookEntity {
     @Column(name = "id_book", nullable = false)
     public Integer idBook;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     public String title;
 
     public LocalDate date;
@@ -47,6 +45,9 @@ public class BookEntity {
 
     @Column(nullable = false)
     public Integer pages;
+
+    @Column(nullable = false, length = 17)
+    public String isbn;
 
     @ManyToMany
     @JoinTable(name="books_author", joinColumns = @JoinColumn(name = "id_book"), inverseJoinColumns = @JoinColumn(name="id_author"))
