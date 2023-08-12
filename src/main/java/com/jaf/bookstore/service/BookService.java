@@ -19,4 +19,10 @@ public class BookService {
     public List<BookEntity> getAll(){
         return bookRepository.findAll();
     }
+
+    public BookEntity getById(int id){
+        return bookRepository.findById(id).orElse(null);
+    }
+
+
 }
