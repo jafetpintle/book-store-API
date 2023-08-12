@@ -30,8 +30,5 @@ public class EditorialEntity {
     @Column( nullable = false ,length = 100)
     public String name;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "editorial")
-    public List<BookEntity> books;
 
 }

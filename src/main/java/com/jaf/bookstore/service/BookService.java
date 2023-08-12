@@ -48,5 +48,11 @@ public class BookService {
         return bookRepository.findAllByGenreName(genre);
     }
 
+    public List<BookEntity> getByEditorial(String editorial){ return bookRepository.findAllByEditorialNameContainsIgnoreCase(editorial); }
+
+    public List<BookEntity> getByAuthor(String author){
+        return bookRepository.findAllByAuthorsNameIgnoreCase(author);
+    }
+
 
 }

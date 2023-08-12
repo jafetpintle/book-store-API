@@ -17,4 +17,8 @@ public interface BookRepository extends ListCrudRepository<BookEntity, Integer> 
     public List<BookEntity> findAllByPagesLessThan(int pages);
 
     public List<BookEntity> findAllByGenreName(String genre);
+
+    public List<BookEntity> findAllByEditorialNameContainsIgnoreCase(String editorial);
+
+    public List<BookEntity> findAllByAuthorsNameIgnoreCase(String Name);
 }
