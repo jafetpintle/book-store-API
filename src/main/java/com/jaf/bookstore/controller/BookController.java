@@ -8,11 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.awt.print.Book;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +33,17 @@ public class BookController {
 
         if(bookOptional.isPresent()){
             return ResponseEntity.ok(bookOptional.get());
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<BookEntity>> getByTitle(@PathVariable String title){
+        List<BookEntity> books = this.bookService.getByTitle(title);
+
+        if(books.size()>0){
+            return ResponseEntity.ok(books);
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

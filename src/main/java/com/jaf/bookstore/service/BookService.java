@@ -24,5 +24,9 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
+    public List<BookEntity> getByTitle(String title){
+        return bookRepository.findAllByTitleContains(title);
+    }
+
 
 }
