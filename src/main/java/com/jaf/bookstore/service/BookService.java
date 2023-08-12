@@ -40,5 +40,9 @@ public class BookService {
         return bookRepository.findAllByPriceBetween(min, max);
     }
 
+    public List<BookEntity> getByPagesMax(int pages){
+        return bookRepository.findAllByPagesLessThan(pages);
+    }
+
 
 }

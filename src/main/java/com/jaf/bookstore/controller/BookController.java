@@ -60,6 +60,13 @@ public class BookController {
         return responseListBooks(books);
     }
 
+   @GetMapping("/pages")
+   public ResponseEntity<List<BookEntity>> getByPagesMax(@RequestParam(defaultValue = "9999") int pages){
+        List<BookEntity> books = this.bookService.getByPagesMax(pages);
+
+        return responseListBooks(books);
+   }
+
     private ResponseEntity<List<BookEntity>> responseListBooks(List<BookEntity> books){
         if(books.size()>0){
             return ResponseEntity.ok(books);
