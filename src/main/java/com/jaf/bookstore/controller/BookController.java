@@ -31,17 +31,28 @@ public class BookController {
     public ResponseEntity<BookEntity> getById(@PathVariable int id){
         Optional<BookEntity> bookOptional = Optional.ofNullable(this.bookService.getById(id));
 
-        if(bookOptional.isPresent()){
-            return ResponseEntity.ok(bookOptional.get());
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return bookOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @GetMapping("/title/{title}")
     public ResponseEntity<List<BookEntity>> getByTitle(@PathVariable String title){
         List<BookEntity> books = this.bookService.getByTitle(title);
+        return responseListBooks(books);
+    }
+    @GetMapping("/language/{language}")
+    public ResponseEntity<List<BookEntity>> getByLanguage(@PathVariable String language){
+        List<BookEntity> books = this.bookService.getByLanguage(language);
+        return responseListBooks(books);
+    }
 
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<BookEntity> getByIsbn(@PathVariable String isbn){
+        Optional<BookEntity> book = Optional.ofNullable(this.bookService.getByIsbn(isbn));
+
+        return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    private ResponseEntity<List<BookEntity>> responseListBooks(List<BookEntity> books){
         if(books.size()>0){
             return ResponseEntity.ok(books);
         }else{

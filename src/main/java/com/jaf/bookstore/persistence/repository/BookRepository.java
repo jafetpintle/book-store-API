@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface BookRepository extends ListCrudRepository<BookEntity, Integer> {
     public List<BookEntity> findAllByTitleContains(String title);
+
+    public List<BookEntity> findAllByLanguage(String language);
+
+    public BookEntity findByIsbn(String isbn);
 }

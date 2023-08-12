@@ -28,5 +28,13 @@ public class BookService {
         return bookRepository.findAllByTitleContains(title);
     }
 
+    public List<BookEntity> getByLanguage(String language){
+        return bookRepository.findAllByLanguage(language);
+    }
+
+    public BookEntity getByIsbn(String isbn){
+        return bookRepository.findByIsbn(isbn);
+    }
+
 
 }
