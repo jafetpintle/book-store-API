@@ -67,6 +67,13 @@ public class BookController {
         return responseListBooks(books);
    }
 
+   @GetMapping("/genre/{genre}")
+   public ResponseEntity<List<BookEntity>> getByGenre(@PathVariable String genre){
+        List<BookEntity> books = this.bookService.getByGenre(genre);
+
+        return responseListBooks(books);
+   }
+
     private ResponseEntity<List<BookEntity>> responseListBooks(List<BookEntity> books){
         if(books.size()>0){
             return ResponseEntity.ok(books);

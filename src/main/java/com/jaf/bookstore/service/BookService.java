@@ -44,5 +44,9 @@ public class BookService {
         return bookRepository.findAllByPagesLessThan(pages);
     }
 
+    public List<BookEntity> getByGenre(String genre){
+        return bookRepository.findAllByGenreName(genre);
+    }
+
 
 }
