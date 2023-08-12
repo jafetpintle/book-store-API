@@ -11,4 +11,6 @@ public interface BookRepository extends ListCrudRepository<BookEntity, Integer> 
     public List<BookEntity> findAllByLanguage(String language);
 
     public BookEntity findByIsbn(String isbn);
+
+    public List<BookEntity> findAllByPriceBetween(double min, double max);
 }

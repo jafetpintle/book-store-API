@@ -36,5 +36,9 @@ public class BookService {
         return bookRepository.findByIsbn(isbn);
     }
 
+    public List<BookEntity> getByPriceRange(double min, double max){
+        return bookRepository.findAllByPriceBetween(min, max);
+    }
+
 
 }

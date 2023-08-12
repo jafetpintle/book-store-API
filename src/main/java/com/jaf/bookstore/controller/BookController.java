@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,13 @@ public class BookController {
         Optional<BookEntity> book = Optional.ofNullable(this.bookService.getByIsbn(isbn));
 
         return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/range")
+    public ResponseEntity<List<BookEntity>> getByPriceRange(@RequestParam(defaultValue = "0") double min, @RequestParam(defaultValue = "9999") double max){
+        List<BookEntity> books = this.bookService.getByPriceRange(min, max);
+
+        return responseListBooks(books);
     }
 
     private ResponseEntity<List<BookEntity>> responseListBooks(List<BookEntity> books){
