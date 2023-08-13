@@ -2,10 +2,12 @@ package com.jaf.bookstore.service;
 
 import com.jaf.bookstore.persistence.entity.BookEntity;
 import com.jaf.bookstore.persistence.repository.BookRepository;
+import com.jaf.bookstore.service.DTO.BookUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -52,6 +54,43 @@ public class BookService {
 
     public List<BookEntity> getByAuthor(String author){
         return bookRepository.findAllByAuthorsNameIgnoreCase(author);
+    }
+
+    public void updateBook(int id, BookUpdateDto bookUpdateDto){
+        Optional<BookEntity> bookOptional = bookRepository.findById(id);
+
+        if(bookOptional.isPresent()){
+            BookEntity book = bookOptional.get();
+
+            if(bookUpdateDto.getTitle()!=null){
+                book.setTitle(bookUpdateDto.getTitle());
+            }
+            if(bookUpdateDto.getDate()!=null){
+                book.setDate(bookUpdateDto.getDate());
+            }if(bookUpdateDto.getIsbn()!=null){
+                book.setIsbn(bookUpdateDto.getIsbn());
+            }if(bookUpdateDto.getCover()!=null){
+                book.setCover(bookUpdateDto.getCover());
+            }if(bookUpdateDto.getLanguage()!=null){
+                book.setLanguage(bookUpdateDto.getLanguage());
+            }if(bookUpdateDto.getSynopsis()!=null){
+                book.setSynopsis(bookUpdateDto.getSynopsis());
+            }if(bookUpdateDto.getPrice()!=null){
+                book.setPrice(bookUpdateDto.getPrice());
+            }if(bookUpdateDto.getPages()!=null){
+                book.setPages(bookUpdateDto.getPages());
+            }if(bookUpdateDto.getGenre()!=null){
+                book.setGenre(bookUpdateDto.getGenre());
+            }if(bookUpdateDto.getEditorial()!=null){
+                book.setEditorial(bookUpdateDto.getEditorial());
+            }
+
+            bookRepository.save(book);
+        }
+    }
+
+    public boolean exist(int id){
+        return bookRepository.existsById(id);
     }
 
 
