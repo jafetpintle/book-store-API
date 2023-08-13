@@ -57,11 +57,11 @@ public class BookEntity {
     public List<AuthorEntity> authors;
 
     @ManyToOne
-    @JoinColumn(name = "genre", referencedColumnName = "id_genre", insertable = false, updatable = false)
+    @JoinColumn(name = "genre", referencedColumnName = "id_genre")
     public GenreEntity genre;
 
     @ManyToOne
-    @JoinColumn(name = "editorial", referencedColumnName = "id_editorial", insertable = false, updatable = false)
+    @JoinColumn(name = "editorial", referencedColumnName = "id_editorial")
     public EditorialEntity editorial;
 
 }

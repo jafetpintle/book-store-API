@@ -100,13 +100,12 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}")
-    private ResponseEntity<Void> updateBook(@PathVariable int bookId, @RequestBody BookUpdateDto bookUpdated){
+    private ResponseEntity updateBook(@PathVariable int bookId, @RequestBody BookUpdateDto bookUpdated){
         try{
             this.bookService.updateBook(bookId,bookUpdated);
-            ResponseEntity.ok();
+            return ResponseEntity.ok().build();
         }catch (Exception e){
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return null;
     }
 }

@@ -1,7 +1,9 @@
 package com.jaf.bookstore.service;
 
 import com.jaf.bookstore.persistence.entity.BookEntity;
+import com.jaf.bookstore.persistence.entity.GenreEntity;
 import com.jaf.bookstore.persistence.repository.BookRepository;
+import com.jaf.bookstore.persistence.repository.GenreRepository;
 import com.jaf.bookstore.service.DTO.BookUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,12 @@ import java.util.Optional;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
+    private final GenreRepository genreRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<BookEntity> getAll(){
@@ -80,7 +84,13 @@ public class BookService {
             }if(bookUpdateDto.getPages()!=null){
                 book.setPages(bookUpdateDto.getPages());
             }if(bookUpdateDto.getGenre()!=null){
-                book.setGenre(bookUpdateDto.getGenre());
+                Optional<GenreEntity> newGenre = genreRepository.findById(bookUpdateDto.getGenre().getIdGenre());
+                if (newGenre.isPresent()){
+                    book.setGenre(newGenre.get());
+                }else{
+                    throw new IllegalArgumentException("Genre id doesnt exist");
+                }
+
             }if(bookUpdateDto.getEditorial()!=null){
                 book.setEditorial(bookUpdateDto.getEditorial());
             }
