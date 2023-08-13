@@ -1,8 +1,10 @@
 package com.jaf.bookstore.service;
 
 import com.jaf.bookstore.persistence.entity.BookEntity;
+import com.jaf.bookstore.persistence.entity.EditorialEntity;
 import com.jaf.bookstore.persistence.entity.GenreEntity;
 import com.jaf.bookstore.persistence.repository.BookRepository;
+import com.jaf.bookstore.persistence.repository.EditorialRepository;
 import com.jaf.bookstore.persistence.repository.GenreRepository;
 import com.jaf.bookstore.service.DTO.BookUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import java.util.Optional;
 public class BookService {
     private final BookRepository bookRepository;
     private final GenreRepository genreRepository;
+    private final EditorialRepository editorialRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
+    public BookService(BookRepository bookRepository, GenreRepository genreRepository, EditorialRepository editorialRepository) {
         this.bookRepository = bookRepository;
         this.genreRepository = genreRepository;
+        this.editorialRepository = editorialRepository;
     }
 
     public List<BookEntity> getAll(){
@@ -92,7 +96,12 @@ public class BookService {
                 }
 
             }if(bookUpdateDto.getEditorial()!=null){
-                book.setEditorial(bookUpdateDto.getEditorial());
+                Optional<EditorialEntity> newEditorial = editorialRepository.findById(bookUpdateDto.getEditorial().getIdEditorial());
+                if (newEditorial.isPresent()){
+                    book.setEditorial(newEditorial.get());
+                }else{
+                    throw new IllegalArgumentException("Genre id doesnt exist");
+                }
             }
 
             bookRepository.save(book);
