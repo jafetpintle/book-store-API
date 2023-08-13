@@ -1,4 +1,4 @@
-package com.jaf.bookstore.service.DTO;
+package com.jaf.bookstore.service;
 
 import com.jaf.bookstore.persistence.entity.AuthorEntity;
 import com.jaf.bookstore.persistence.repository.AuthorRepository;
@@ -29,6 +29,16 @@ public class AuthorService {
             return authorEntityOptional.get();
         }else{
             throw new IllegalArgumentException("Author id doesn exist.");
+        }
+    }
+
+    public List<AuthorEntity> getByIds(List<Integer> ids){
+        List<AuthorEntity> authors = authorRepository.findAllById(ids);
+
+        if(ids.size()== authors.size()){
+            return authors;
+        }else{
+            throw new IllegalArgumentException("At least 1 Invalid author id");
         }
     }
 

@@ -1,7 +1,7 @@
 package com.jaf.bookstore.controller;
 
 import com.jaf.bookstore.persistence.entity.AuthorEntity;
-import com.jaf.bookstore.service.DTO.AuthorService;
+import com.jaf.bookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

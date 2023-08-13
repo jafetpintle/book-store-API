@@ -1,11 +1,11 @@
 package com.jaf.bookstore.service;
 
+import com.jaf.bookstore.persistence.entity.AuthorEntity;
 import com.jaf.bookstore.persistence.entity.BookEntity;
 import com.jaf.bookstore.persistence.entity.EditorialEntity;
 import com.jaf.bookstore.persistence.entity.GenreEntity;
 import com.jaf.bookstore.persistence.repository.BookRepository;
-import com.jaf.bookstore.persistence.repository.EditorialRepository;
-import com.jaf.bookstore.persistence.repository.GenreRepository;
+import com.jaf.bookstore.service.DTO.AuthorDto;
 import com.jaf.bookstore.service.DTO.BookUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,19 @@ public class BookService {
     private final BookRepository bookRepository;
     private final GenreService genreService;
     private final EditorialService editorialService;
+    private final AuthorService authorService;
 
     @Autowired
-    public BookService(BookRepository bookRepository, GenreService genreService, EditorialService editorialService) {
+    public BookService(BookRepository bookRepository, GenreService genreService, EditorialService editorialService, AuthorService authorService) {
         this.bookRepository = bookRepository;
         this.genreService = genreService;
         this.editorialService = editorialService;
+        this.authorService = authorService;
     }
+
+
+
+
 
 
 
@@ -91,7 +97,7 @@ public class BookService {
             }if(bookUpdateDto.getPages()!=null){
                 book.setPages(bookUpdateDto.getPages());
             }if(bookUpdateDto.getGenre()!=null){
-                Optional<GenreEntity> newGenre = Optional.ofNullable(genreService.getById(bookUpdateDto.getGenre().getIdGenre()));
+                Optional<GenreEntity> newGenre = Optional.ofNullable(genreService.getById(bookUpdateDto.getGenre()));
                 if (newGenre.isPresent()){
                     book.setGenre(newGenre.get());
                 }else{
@@ -99,12 +105,19 @@ public class BookService {
                 }
 
             }if(bookUpdateDto.getEditorial()!=null){
-                Optional<EditorialEntity> newEditorial = Optional.ofNullable(editorialService.getById((bookUpdateDto.getEditorial().getIdEditorial())));
+                Optional<EditorialEntity> newEditorial = Optional.ofNullable(editorialService.getById((bookUpdateDto.getEditorial())));
                 if (newEditorial.isPresent()){
                     book.setEditorial(newEditorial.get());
                 }else{
                     throw new IllegalArgumentException("Editorial id doesnt exist");
                 }
+            }if(bookUpdateDto.getAuthors()!=null){
+                List<Integer> authorsIds = bookUpdateDto.getAuthors().stream()
+                        .map(AuthorDto::getId).toList();
+
+                List<AuthorEntity> authors = authorService.getByIds(authorsIds);
+
+                book.setAuthors(authors);
             }
 
             bookRepository.save(book);

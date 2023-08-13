@@ -1,8 +1,5 @@
 package com.jaf.bookstore.service.DTO;
 
-import com.jaf.bookstore.persistence.entity.AuthorEntity;
-import com.jaf.bookstore.persistence.entity.EditorialEntity;
-import com.jaf.bookstore.persistence.entity.GenreEntity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +19,7 @@ public class BookUpdateDto {
     public Integer pages;
     public String isbn;
     public String cover;
-    public List<AuthorEntity> authors;
-    public GenreEntity genre;
-    public EditorialEntity editorial;
+    public List<AuthorDto> authors;
+    public Integer genre;
+    public Integer editorial;
 }
