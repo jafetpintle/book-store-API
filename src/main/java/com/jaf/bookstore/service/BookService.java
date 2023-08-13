@@ -103,7 +103,7 @@ public class BookService {
                 if (newEditorial.isPresent()){
                     book.setEditorial(newEditorial.get());
                 }else{
-                    throw new IllegalArgumentException("Genre id doesnt exist");
+                    throw new IllegalArgumentException("Editorial id doesnt exist");
                 }
             }
 
