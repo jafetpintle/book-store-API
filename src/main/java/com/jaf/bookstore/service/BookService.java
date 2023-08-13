@@ -16,15 +16,18 @@ import java.util.Optional;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
-    private final GenreRepository genreRepository;
-    private final EditorialRepository editorialRepository;
+    private final GenreService genreService;
+    private final EditorialService editorialService;
 
     @Autowired
-    public BookService(BookRepository bookRepository, GenreRepository genreRepository, EditorialRepository editorialRepository) {
+    public BookService(BookRepository bookRepository, GenreService genreService, EditorialService editorialService) {
         this.bookRepository = bookRepository;
-        this.genreRepository = genreRepository;
-        this.editorialRepository = editorialRepository;
+        this.genreService = genreService;
+        this.editorialService = editorialService;
     }
+
+
+
 
     public List<BookEntity> getAll(){
         return bookRepository.findAll();
@@ -88,7 +91,7 @@ public class BookService {
             }if(bookUpdateDto.getPages()!=null){
                 book.setPages(bookUpdateDto.getPages());
             }if(bookUpdateDto.getGenre()!=null){
-                Optional<GenreEntity> newGenre = genreRepository.findById(bookUpdateDto.getGenre().getIdGenre());
+                Optional<GenreEntity> newGenre = Optional.ofNullable(genreService.getById(bookUpdateDto.getGenre().getIdGenre()));
                 if (newGenre.isPresent()){
                     book.setGenre(newGenre.get());
                 }else{
@@ -96,7 +99,7 @@ public class BookService {
                 }
 
             }if(bookUpdateDto.getEditorial()!=null){
-                Optional<EditorialEntity> newEditorial = editorialRepository.findById(bookUpdateDto.getEditorial().getIdEditorial());
+                Optional<EditorialEntity> newEditorial = Optional.ofNullable(editorialService.getById((bookUpdateDto.getEditorial().getIdEditorial())));
                 if (newEditorial.isPresent()){
                     book.setEditorial(newEditorial.get());
                 }else{
