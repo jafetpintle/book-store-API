@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Setter
 @Getter
-public class BookUpdateDto {
+public class BookDto {
     public String title;
     public LocalDate date;
     public String synopsis;

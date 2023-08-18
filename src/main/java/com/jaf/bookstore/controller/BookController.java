@@ -2,7 +2,7 @@ package com.jaf.bookstore.controller;
 
 import com.jaf.bookstore.persistence.entity.BookEntity;
 import com.jaf.bookstore.service.BookService;
-import com.jaf.bookstore.service.DTO.BookUpdateDto;
+import com.jaf.bookstore.service.DTO.BookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -100,7 +100,7 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}")
-    private ResponseEntity updateBook(@PathVariable int bookId, @RequestBody BookUpdateDto bookUpdated){
+    private ResponseEntity updateBook(@PathVariable int bookId, @RequestBody BookDto bookUpdated){
         try{
             this.bookService.updateBook(bookId,bookUpdated);
             return ResponseEntity.ok().build();

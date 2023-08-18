@@ -6,7 +6,7 @@ import com.jaf.bookstore.persistence.entity.EditorialEntity;
 import com.jaf.bookstore.persistence.entity.GenreEntity;
 import com.jaf.bookstore.persistence.repository.BookRepository;
 import com.jaf.bookstore.service.DTO.AuthorDto;
-import com.jaf.bookstore.service.DTO.BookUpdateDto;
+import com.jaf.bookstore.service.DTO.BookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +27,6 @@ public class BookService {
         this.editorialService = editorialService;
         this.authorService = authorService;
     }
-
-
-
-
-
-
 
 
     public List<BookEntity> getAll(){
@@ -73,46 +67,46 @@ public class BookService {
         return bookRepository.findAllByAuthorsNameIgnoreCase(author);
     }
 
-    public void updateBook(int id, BookUpdateDto bookUpdateDto){
+    public void updateBook(int id, BookDto bookDto){
         Optional<BookEntity> bookOptional = bookRepository.findById(id);
 
         if(bookOptional.isPresent()){
             BookEntity book = bookOptional.get();
 
-            if(bookUpdateDto.getTitle()!=null){
-                book.setTitle(bookUpdateDto.getTitle());
+            if(bookDto.getTitle()!=null){
+                book.setTitle(bookDto.getTitle());
             }
-            if(bookUpdateDto.getDate()!=null){
-                book.setDate(bookUpdateDto.getDate());
-            }if(bookUpdateDto.getIsbn()!=null){
-                book.setIsbn(bookUpdateDto.getIsbn());
-            }if(bookUpdateDto.getCover()!=null){
-                book.setCover(bookUpdateDto.getCover());
-            }if(bookUpdateDto.getLanguage()!=null){
-                book.setLanguage(bookUpdateDto.getLanguage());
-            }if(bookUpdateDto.getSynopsis()!=null){
-                book.setSynopsis(bookUpdateDto.getSynopsis());
-            }if(bookUpdateDto.getPrice()!=null){
-                book.setPrice(bookUpdateDto.getPrice());
-            }if(bookUpdateDto.getPages()!=null){
-                book.setPages(bookUpdateDto.getPages());
-            }if(bookUpdateDto.getGenre()!=null){
-                Optional<GenreEntity> newGenre = Optional.ofNullable(genreService.getById(bookUpdateDto.getGenre()));
+            if(bookDto.getDate()!=null){
+                book.setDate(bookDto.getDate());
+            }if(bookDto.getIsbn()!=null){
+                book.setIsbn(bookDto.getIsbn());
+            }if(bookDto.getCover()!=null){
+                book.setCover(bookDto.getCover());
+            }if(bookDto.getLanguage()!=null){
+                book.setLanguage(bookDto.getLanguage());
+            }if(bookDto.getSynopsis()!=null){
+                book.setSynopsis(bookDto.getSynopsis());
+            }if(bookDto.getPrice()!=null){
+                book.setPrice(bookDto.getPrice());
+            }if(bookDto.getPages()!=null){
+                book.setPages(bookDto.getPages());
+            }if(bookDto.getGenre()!=null){
+                Optional<GenreEntity> newGenre = Optional.ofNullable(genreService.getById(bookDto.getGenre()));
                 if (newGenre.isPresent()){
                     book.setGenre(newGenre.get());
                 }else{
                     throw new IllegalArgumentException("Genre id doesnt exist");
                 }
 
-            }if(bookUpdateDto.getEditorial()!=null){
-                Optional<EditorialEntity> newEditorial = Optional.ofNullable(editorialService.getById((bookUpdateDto.getEditorial())));
+            }if(bookDto.getEditorial()!=null){
+                Optional<EditorialEntity> newEditorial = Optional.ofNullable(editorialService.getById((bookDto.getEditorial())));
                 if (newEditorial.isPresent()){
                     book.setEditorial(newEditorial.get());
                 }else{
                     throw new IllegalArgumentException("Editorial id doesnt exist");
                 }
-            }if(bookUpdateDto.getAuthors()!=null){
-                List<Integer> authorsIds = bookUpdateDto.getAuthors().stream()
+            }if(bookDto.getAuthors()!=null){
+                List<Integer> authorsIds = bookDto.getAuthors().stream()
                         .map(AuthorDto::getId).toList();
 
                 List<AuthorEntity> authors = authorService.getByIds(authorsIds);
