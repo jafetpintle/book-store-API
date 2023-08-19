@@ -67,6 +67,22 @@ public class BookService {
         return bookRepository.findAllByAuthorsNameIgnoreCase(author);
     }
 
+
+    public BookEntity save(BookEntity newBook){
+        if(newBook.getIdBook() == null){
+            return bookRepository.save(newBook);
+        }
+        return null;
+    }
+
+    public void delete(int id){
+        if(getById(id)!=null){
+            bookRepository.deleteById(id);
+        }else{
+            throw new IllegalArgumentException("Id book doesnt exist.");
+        }
+    }
+
     public void updateBook(int id, BookDto bookDto){
         Optional<BookEntity> bookOptional = bookRepository.findById(id);
 

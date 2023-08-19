@@ -6,8 +6,10 @@ import com.jaf.bookstore.service.DTO.BookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,6 +93,37 @@ public class BookController {
         return responseListBooks(books);
     }
 
+    @PutMapping("/{bookId}")
+    public ResponseEntity updateBook(@PathVariable int bookId, @RequestBody BookDto bookUpdated){
+        try{
+            this.bookService.updateBook(bookId,bookUpdated);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<BookEntity> save (@RequestBody BookEntity book){
+        BookEntity newBook = this.bookService.save(book);
+
+        if(newBook != null){
+            return ResponseEntity.ok(book);
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable int id){
+        try{
+            this.bookService.delete(id);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     private ResponseEntity<List<BookEntity>> responseListBooks(List<BookEntity> books){
         if(books.size()>0){
             return ResponseEntity.ok(books);
@@ -99,13 +132,5 @@ public class BookController {
         }
     }
 
-    @PutMapping("/{bookId}")
-    private ResponseEntity updateBook(@PathVariable int bookId, @RequestBody BookDto bookUpdated){
-        try{
-            this.bookService.updateBook(bookId,bookUpdated);
-            return ResponseEntity.ok().build();
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+
 }
