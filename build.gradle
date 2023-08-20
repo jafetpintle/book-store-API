@@ -35,6 +35,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '4.0.0'
 
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.0.1'
+
+
 
 
 }

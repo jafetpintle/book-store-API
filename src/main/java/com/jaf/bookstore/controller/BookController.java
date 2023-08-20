@@ -3,7 +3,11 @@ package com.jaf.bookstore.controller;
 import com.jaf.bookstore.persistence.entity.BookEntity;
 import com.jaf.bookstore.service.BookService;
 import com.jaf.bookstore.service.DTO.BookDto;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,8 +24,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
+@Getter
+@Setter
+@RefreshScope
 public class BookController {
     private final BookService bookService;
+    @Value("${app.testProp}")
+    private String testProp;
 
     @Autowired
     public BookController(BookService bookService) {
@@ -122,6 +131,11 @@ public class BookController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/test-prop")
+    public String getTestProp(){
+        return this.testProp;
     }
 
     private ResponseEntity<List<BookEntity>> responseListBooks(List<BookEntity> books){
